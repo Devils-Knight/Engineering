@@ -1,0 +1,445 @@
+Question and Answers
+
+11. Review Questions & Exercises:
+a. Fill in the Blanks
+
+i. An overridden base class function may be called by a function in a derived class by using the :: Scope Resolution Operator.
+Ans- :: (Scope Resolution Operator)
+
+ii. A(n) Virtual member function in a base class expects to be overridden in a derived class.
+Ans- Virtual Member function.
+
+iii. A(n) Virtual member function in a base class expects to be overridden in a derived class.
+Ans- Virtual Member function.
+
+iv. The line containing a throw statement is known as the Exception.
+Ans- Exception.
+
+v. The try block contains code that directly or indirectly might cause an exception to be thrown. And catch block handles an exception.
+Ans-
+i- Try block
+ii- Catch Block
+
+b. Answer the following:
+i. What is the difference between a protected class member and a private class member?
+Ans- 
+1) The private member of a class can be used only by the member functions of the class in which it is declared whereas protected members can be used by its member functions as well as other functions in which its object is declared. 
+2) Private members are not accessible to derived class whereas protected members can be used by derived classes if inherited in protected and public mode.
+
+ii. Draw and explain multiple inheritance with suitable example.
+Ans-
+Multiple inheritance is a feature of some object-oriented computer programming languages in which an object or class can inherit characteristics and features from more than one parent object or parent class.
+ 
+#include<iostream> 
+using namespace std;   
+
+class A 
+{ 
+public: 
+  	A()  
+{ 
+cout << "A's constructor called" << endl;
+} 
+}; 
+  
+class B 
+{ 
+public: 
+  	B()  
+{ 
+cout << "B's constructor called" << endl; 
+} 
+}; 
+  
+class C: public B, public A  
+{ 
+public: 
+  	C()  
+{ 
+cout << "C's constructor called" << endl; 
+} 
+}; 
+  
+int main() 
+{ 
+    C c; 
+    return 0; 
+}
+
+
+iii. Describe the concept of virtual base class with suitable example.
+Ans-
+Virtual base classes are used in virtual inheritance in a way of preventing multiple instances of a given class appearing in an inheritance hierarchy when using multiple inheritances.
+Example:
+#include <iostream> 
+using namespace std; 
+  
+class A 
+{ 
+public: 
+void show() 
+{ 
+cout << "Hello from A"<<endl; 
+} 
+}; 
+  
+class B : public virtual A 
+{ 
+}; 
+  
+class C : virtual public A 
+{ 
+}; 
+  
+class D : public B, public C 
+{ 
+}; 
+  
+int main() 
+{ 
+    D obj; 
+    obj.show(); 
+}
+
+iv. Explain the difference between a try block and a catch block.
+Ans-
+1. A try block is a block which contains a piece of code that may throw an exception whereas a catch block is a block in which the thrown exception is caught. 
+2. Try block will always execute whereas catch block will execute only when exception is thrown.
+
+v. Explain different kinds of errors.
+Ans-
+Syntax Error: This error occurs when the rules of a programs are violated.
+
+Semantic Error: This error occurs when statement has no meaning.
+
+Run Time Error: This error occurs during the execution of some illegal operation or unavailability of conditions for executing.
+
+Logical Error: This error which causes a program to produce incorrect or undesired output. 
+
+c. Algorithm Assignments:
+i. Write the first line of the declaration for a SoundSystem class. Use multiple inheritance to base the class on the CDplayer class, the Tuner class, and the CassettePlayer class. Use public base class access in all cases.
+Ans-
+Class SoundSystem : public CDplayer, public Tuner, public CassettePlayer
+
+ii. Write an exception handling code which can check the following exception in inputted date (you must use multiple try-catch blocks):
+a. Invalid Day Throw when an invalid day (< 1 or > 31) is passed to the class.
+Answer-
+try
+{
+    if(day < 1 || day > 31)
+        throw day;
+    cout<<"\nDay :"<<day<<endl;
+}
+catch(int d)
+{
+    cout<<"\nError: Day should be greater than or equal to 1 and less than or equal to 31"<<endl;
+    cout<<d<<" day is not valid"<<endl;
+}
+b. Invalid Month Throw when an invalid month (< 1 or > 12) is passed to the class.
+Answer-
+try
+{
+    if(month < 1 || month > 12)
+        throw month;
+
+    cout<<"\nMonth :"<<month<<endl;
+}
+
+catch(int m)
+{
+    cout<<"\nError: Month should be greater than or equal to 1 and less than or equal to 12"<<endl;
+    cout<<m<<" month is not valid"<<endl;
+}
+
+d. Programming Assignments:
+i. Design a class named Course with two data members: name and units. Then design a class named Student with three data members: name, gpa, and a list of courses taken. The list must be implemented as an array in heap memory. Create constructors, destructor, and all necessary member functions for the operation of the Course and Student class. Test both classes in an application program.
+Answer-
+#include <iostream>
+#include <string.h>
+#include <cstdio>
+
+using namespace std;
+
+class Course
+{
+    string name;
+    int units;
+
+	public:
+
+    Course(string name = "", float units = 0)
+    {
+        this->name = name;
+        this->units = units;
+    }
+
+    void getData()
+    {
+        cout<<"\nEnter Unit Name : ";
+        cin>>name;
+        fflush(stdin);
+        cout<<"Enter Unit No : ";
+        cin>>units;
+    }
+
+    void putData()
+    {
+        cout<<"\nUnit Name : "<<name<<endl;
+        cout<<"Unit No : "<<units<<endl;
+    }
+
+    ~Course()
+    {
+        cout<<"\nDestructor of Course Class called"<<endl;
+    }
+};
+
+class Student
+{
+    string studentName;
+    float gpa;
+    Course *c;
+
+	public:
+
+    int noOfCourse;
+
+    Student(int n = 0, string studentName = "", float gpa = 0.0)
+    {
+        this->studentName = studentName;
+        this->gpa = gpa;
+        noOfCourse = n;
+        c = new Course[noOfCourse];
+    }
+
+    void getData()
+    {
+        cout<<"\nEnter Student Details : ";
+        cout<<"\n\nEnter Student Name : ";
+        fflush(stdin);
+        cin>>studentName;
+        cout<<"\nEnter GPA : ";
+        cin>>gpa;
+        cout<<"\nEnter Course Details : "<<endl;
+        for(int i = 0; i < noOfCourse; i++)
+        {
+            c[i].getData();
+        }
+    }
+
+    void putData()
+    {
+        cout<<"\n\t\tStudent Details"<<endl;
+        cout<<"\nStudent Name : "<<studentName<<endl;
+        cout<<"\nGPA : "<<gpa<<endl;
+        cout<<"\n\t\tCourse Details"<<endl;
+        for(int i = 0; i < noOfCourse; i++)
+        {
+            c[i].putData();
+        }
+    }
+
+    ~Student()
+    {
+        delete c;
+        cout<<"\nDestructor of Student Class called"<<endl;
+    }
+};
+
+int main()
+{
+    int noOfCourse;
+	cout<<"\nEnter number of courses : ";
+	cin>>noOfCourse;
+	Student s(noOfCourse);
+	s.getData();
+	s.putData();
+	return 0;
+}
+ 
+ii. Write C++ program for following multilevel inheritance.:
+
+ 
+Accept and display data for one car with all details.
+Answer-
+#include <iostream>
+#include <string.h>
+#include <cstdio>
+
+using namespace std;
+
+class Carmanufacturer
+{
+    char name[20];
+
+	public:
+
+    void getData()
+    {
+        cout<<"\nEnter Car Manufacturer Name : ";
+        cin.getline(name, 20);
+    }
+
+    void putData()
+    {
+        cout<<"\nCar Manufacturer Name : "<<name<<endl;
+    }
+};
+
+class Carmodel: public Carmanufacturer
+{
+    char modelName[20];
+    int modelNumber;
+
+	public:
+
+    void getData()
+    {
+        cout<<"Enter Model Name : ";
+        cin.getline(modelName, 20);
+        cout<<"Enter Model Number : ";
+        cin>>modelNumber;
+    }
+
+    void putData()
+    {
+        cout<<"\nModel Name : "<<modelName<<endl;
+        cout<<"\nModel Number : "<<modelNumber<<endl;
+    }
+};
+
+class Car: public Carmodel
+{
+    string carNumber;
+    string color;
+
+	public:
+
+    void getData()
+    {
+        cout<<"Enter Car Details : "<<endl;
+        Carmanufacturer::getData();
+        Carmodel::getData();
+        cout<<"Enter Car Number : ";
+        fflush(stdin);
+        cin>>carNumber;
+        cout<<"Enter Car Color : ";
+        fflush(stdin);
+        cin>>color;
+    }
+
+    void putData()
+    {
+        cout<<"\n\t\tCAR DETAILS"<<endl;
+        Carmanufacturer::putData();
+        Carmodel::putData();
+        cout<<"\nCar Number : "<<carNumber<<endl;
+        cout<<"\nCar Color : "<<color<<endl;
+    }
+};
+
+int main()
+{
+    Car c;
+    c.getData();
+    c.putData();
+    return 0;
+}
+ 
+iii. Write a C++ program to check the following conditions and throw the exception if the criterion does not meet.
+c. User has age between 18 and 55
+d. User stays has income between Rs. 50,000 – Rs. 1,00,000 per month
+e. User stays in Pune/ Mumbai/ Bangalore / Chennai
+f. User has 4-wheeler
+Accept age, Income, City, Vehicle from the user and check for the conditions mentioned above. If any of the condition does not meet, then throw the exception.
+Answer-
+#include <iostream>
+#include <string.h>
+#include <cstdio>
+
+using namespace std;
+
+class Person
+{
+    int age;
+    float income;
+    string location;
+    string vehicle;
+
+	public:
+
+    void getData()
+    {
+        cout<<"Enter Details : "<<endl;
+        cout<<"\nEnter Age : ";
+        cin>>age;
+        cout<<"Enter Income : ";
+        cin>>income;
+        cout<<"Enter Location : ";
+        cin>>location;
+        cout<<"Enter Vehicle Type (2-wheeler, 3-wheeler, so on) : ";
+        cin>>vehicle;
+    }
+
+    void putData()
+    {
+        cout<<"\n\t\tSHOW DATA"<<endl;
+        try
+        {
+            if(age < 18 || age > 55)
+                throw age;
+            cout<<"\nAge : "<<age<<endl;
+        }
+        catch(int a)
+        {
+            cout<<"\nError : Age should be between 18 and 55"<<endl;
+            cout<<a<<" : Age is not allowed"<<endl;
+        }
+
+        try
+        {
+            if(income < 50000 || income > 100000)
+                throw income;
+            cout<<"\nIncome : "<<income<<endl;
+        }
+        catch(float salary)
+        {
+            cout<<"\nError : Income should be between 50000 and 100000"<<endl;
+            cout<<salary<<" : Income is not acceptable"<<endl;
+        }
+
+        try
+        {
+            if(location != "Pune" && location != "Mumbai" && location != "Bangalore" && location != "Chennai")
+                throw location;
+            cout<<"\nLocation : "<<location<<endl;
+        }
+        catch(string l)
+        {
+            cout<<"\nError : Only Pune, Mumbai, Bangalore and Chennai location is acceptable"<<endl;
+            cout<<l<<" Location is not acceptable"<<endl;
+        }
+
+        try
+        {
+            if(vehicle != "4-wheeler")
+                throw vehicle;
+            cout<<"\nVehicle : "<<vehicle<<endl;
+        }
+        catch(string v)
+        {
+            cout<<"\nError : Only 4-wheeler is allowed"<<endl;
+            cout<<v<<" is not allowed"<<endl;
+        }
+    }
+};
+
+int main()
+{
+    Person p;
+    p.getData();
+    p.putData();
+    return 0;
+}
+
+ 

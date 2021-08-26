@@ -1,0 +1,271 @@
+; Write an assembly program to Display the maximum element in an array of 8 bit elements 
+
+; DOP: 24-02-2021
+
+; Shubham Malik
+
+
+
+			;<----MACRO--->
+
+%macro print 2		;Declaring MACRO with 2 parameters
+
+	mov rax, 1		;assigning system call in rax(1 for sys_write)
+
+	mov rdi, 1		;assign file descriptor to rdi(1 for stdout)
+
+	mov rsi, %1		;moving the buffer into rsi, 1st variale is represented by %1
+
+	mov rdx, %2		;moving the size of buffer into rdx, 2nd varable is represented by %2
+
+	syscall			;system call
+
+%endmacro			;MACRO END
+
+
+
+%macro read 2		;Declaring MACRO with 2 parameters
+
+	mov rax, 0		;assign system call to rax(0 for sys_read)
+
+	mov rdi, 0		;assign file descriptor to rdi(0 for stdin)
+
+	mov rsi, %1		;moving the buffer into rsi, 1st variale is represented by %1
+
+	mov rdx, %2		;moving the size of buffer into rdx, 2nd varable is represented by %2
+
+	syscall			;system call
+
+%endmacro
+
+
+
+
+
+
+
+
+
+section .data
+
+  input_message db "Enter 8 bit Hexadecimal number: "      ;output display message
+
+  len_input_message equ $-input_message      ;message length
+
+  output_message db "The maximum element in the array is: "
+
+  output_len equ $- output_message          
+
+  error_msg db "Wrong Input Entered, Please try again: "  ;error Handling message
+
+  error_len equ $- error_msg           ;lenght of error message
+
+  newline db 10
+
+  
+
+section .bss
+
+  ;answer resb 5        ;reserve 5  words for storing 5 8-bit numbers
+
+  value resb 3        ;reserve 3 bytes, 2 input + 1 enter
+
+  temp resb 2          ;reserve the 2 bytes
+
+  temp2 resb 1          ;for storing the maximum value
+
+  
+
+section .text
+
+  global _start
+
+_start:
+
+error_skip:
+
+  mov rcx, 05h      ;moving 5 in rcx for 5 inputs
+
+    ;mov rsi, answer      ;now rsi has the address of answer
+
+    mov byte[temp2] , 0    ;initialising maxx with 0
+
+    loop1:      ;loop starts
+
+        
+
+          push rcx      ;push rcx into the stack so that we can fetch the same value of rcx after calling ascii_hex
+
+         ;push rsi      ;push rsi into the stack so that we can fetch the same value of rsi after calling ascii_hex
+
+         
+
+          print input_message, len_input_message  ;calling macro with two parameter, first->buffer(here message), second->len
+
+          
+
+          read value,3    ;3 input and one enter
+
+          call ascii_hex      ;ASCII to HEX conversion 
+
+          
+
+          cmp byte[temp2],bl						;comparing ebx with temp
+
+          	jae contd
+
+          mov byte[temp2],bl					;if greater than or equal to mov ebx to temp
+
+          contd:
+
+        
+
+          ;pop rsi    ;fetching rsi from stack
+
+          pop rcx    ;fetching rcx from stack
+
+          ;mov [rsi], bl  ;assigning value of address 'rsi' with 'bl'
+
+          ;add rsi, 1    ;increment rsi by 2 to continue for next 
+
+     loop loop1
+
+     
+
+   mov bl, byte[temp2]      ;moving maximum value at bl
+
+   call displaymax      ;converting bl to readable ascii to the assembler
+
+   print newline, 1      ;print newline
+
+   print output_message , output_len  ;print message
+
+   print temp, 2      ;print maximum number
+
+   print newline, 1      ;print newline
+
+     
+
+     
+
+  mov rax, 60
+
+  mov rdi, 0
+
+  syscall
+
+
+
+
+
+check:          ;To check wheter the value is greater than 4fh or not
+
+  cmp al, 40h        ;comparing two values
+
+  jle error_label      ;if al <= 4fh, then jump to 'error_label' to print error message
+
+  jmp return_check      ;otherwise jump to the next line of 'check' inside ascii_hex
+
+   
+
+error_label:        ;label to print error message and jump back to error_skip
+
+  print error_msg, error_len     ;print the error message
+
+  print newline, 1      ;newline
+
+  jmp error_skip       ;jump the main loop without incrementing rcx, so next time input for same loop will be taken
+
+
+
+ascii_hex:          ;label-> under this label we convert ascii values to hexadecimal
+
+  mov rcx, 2        ;assign 2 to rcx, for looping 4 times
+
+  mov rsi, value      ;rsi now have the address of 'value'
+
+  mov bl, 0        ;clear buffer from bx register
+
+  next1:        ;label for looping 
+
+    rol bl, 4      ;rotating bl left by 4 bits 
+
+    mov al, [rsi]    ;al now have the value where rsi points
+
+    cmp al, 2fh      ;comparing these two values
+
+    jbe error_label    ;if al <= 2fh, then jump to 'error_label'
+
+    cmp al, 47h      ;comparing these two values
+
+    jge error_label    ;if al >= 47h,  then jump to 'error_label'
+
+    cmp al, 3ah      ;comparing these two values
+
+    jge check      ;if al >= 40h, then jump to 'check' to check whether the value is smaller than 4fh or not
+
+    return_check:    ;if al > 4fh, then above statement will jump here
+
+    cmp al, 39h      ;comparing 'al' with the ascii equivaluent of '0h' ->carry will be 1 if al <= 39h 
+
+      jbe sub30h    ;jump statement to label to line 
+
+    sub al, 7      ;al= al -7
+
+    sub30h:      ;label
+
+      sub al, 30h   ;al= al-30
+
+    add bl, al      ;bl= bl+al
+
+    inc rsi      ;rsi= rsi+1 (incrimenting one byte)
+
+    loop next1      ;loop
+
+  ret          ;return statement
+
+  
+
+
+
+displaymax:
+
+  mov rsi , temp
+
+  mov rcx, 2
+
+  
+
+  
+
+  next2:
+
+    rol bl, 4      ;Rotating bl left by 4 bits
+
+    mov al, bl      ;assign bl to al
+
+    and al, 0Fh      ;storing least significant hex value in al
+
+    cmp al, 9      ;compare al and 39H [9]
+
+    jbe add30h      ;if al <= 39h [9] then add 30H
+
+    
+
+    add al, 7      ;if al is between A-F then add 7 to it
+
+    
+
+    add30h:
+
+      add al, 30h    ;al=al+30
+
+    
+
+    mov [rsi], al    ;assigning value of address 'rsi' with 'al', basically we are updating the memory pointed by temp
+
+    inc rsi      ;rsi= rsi+1->increment rsi
+
+    loop next2      ;loop
+
+  ret

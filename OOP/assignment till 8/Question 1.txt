@@ -1,0 +1,77 @@
+#include<iostream>
+#include<cstdio>
+
+using namespace std;
+
+class Personal
+{
+    protected: int rollno, age;
+               string name, gender;
+};
+
+class Professional
+{
+    protected: string knownPL, knownENV, areaofinterest;
+};
+
+class Academic
+{
+    protected: float ssc, hsc, fe;
+               string extraactivity;
+};
+
+class Bio_Data : public Personal, public Professional, public Academic
+{
+    public:    void inputData()
+               {
+                   cout<<"Enter your Name : ";
+                   getline(cin, name);
+                   cout<<"Enter Gender : ";
+                   cin>>gender;
+                   cout<<"Enter your Age : ";
+                   cin>>age;
+                   cout<<"Enter Roll No : ";
+                   cin>>rollno;
+                   cout<<"Enter known programming languages : ";
+                   fflush(stdin);
+                   getline(cin, knownPL);
+                   cout<<"Enter known Environments : ";
+                   fflush(stdin);
+                   getline(cin, knownENV);
+                   cout<<"Enter your Area of Interest : ";
+                   fflush(stdin);
+                   getline(cin, areaofinterest);
+                   cout<<"Enter your SSC CGPA : ";
+                   cin>>ssc;
+                   cout<<"Enter your HSC percentage : ";
+                   cin>>hsc;
+                   cout<<"Enter FE SGPA : ";
+                   cin>>fe;
+                   cout<<"Enter Extracurricular Activities : ";
+                   fflush(stdin);
+                   getline(cin, extraactivity);
+               };
+               void showData()
+               {
+                   cout<<"\nName : "<<name;
+                   cout<<"\nGender : "<<gender;
+                   cout<<"\nAge : "<<age;
+                   cout<<"\nRoll No : "<<rollno;
+                   cout<<"\nKnown programming languages : "<<knownPL;
+                   cout<<"\nKnown Environments : "<<knownENV;
+                   cout<<"\nArea of Interest : "<<areaofinterest;
+                   cout<<"\nSSC CGPA : "<<ssc;
+                   cout<<"\nHSC percentage : "<<hsc;
+                   cout<<"\nFE SGPA : "<<fe;
+                   cout<<"\nExtracurricular Activities : "<<extraactivity<<endl;
+               };
+};
+
+int main()
+{
+    Bio_Data data;
+    data.inputData();
+    cout<<"\nBIO DATA";
+    data.showData();
+    return 0;
+}

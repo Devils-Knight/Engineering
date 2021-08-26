@@ -1,0 +1,42 @@
+Shubham malik
+3249
+
+i.Before a structure variable can be created, the structure must be _________
+ans -  Defined 
+ii.In the definition of a structure variable, the _________ is placed before the variable name, just like the data type of a regular variable is placed before its name. 
+ans - Tag
+iii.The variables declared inside a structure declaration are called _________.
+ans - Members
+
+
+
+
+
+b.Answer the following:
+ i.Look at the following code.
+ struct Town { 
+string townName; 
+string countyName;
+ double population;
+ double elevation; };                                                                                                                        
+t = { "Canton", "Haywood", 9478 };
+ A) What value is stored in t.townName ?
+ ans - Canton
+ B) What value is stored in t.countyName ? 
+ ans - Haywood
+ C) What value is stored in t.population ?
+ ans - elevation
+ D) What value is stored in t.elevation ?
+ans - Garbage value
+
+ ii.Look at the following declaration. 
+enum Person { BILL, JOHN, CLAIRE, BOB }; Person p; 
+Indicate  whether  each  of  the  following  statements  or  expressions  is  valid  or invalid. 
+A) p = BOB; 
+B) p ++ ; 
+C) BILL > BOB 
+D) p = 0; 
+E) int x = BILL; 
+F) p = static_cast<Person>(3); 
+G) cout << CLAIRE << endl; 
+

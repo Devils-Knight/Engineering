@@ -1,0 +1,491 @@
+Question and Answers
+
+10. Review Questions & Exercises:
+
+a. Fill in the Blanks
+
+i. An operator may be ____________ to work with a specific class.
+Answer- Overloaded.
+
+ii. When overloading the _____________ operator, its function must have a dummy parameter.
+Answer- Post increment or decrement operator.
+
+iii. Overloading an operator allows operators to be used with _____________.
+Answer- Objects of user defined data types.
+
+iv. The ____________ operator can be used with a new class without defining this binary function.
+Answer- Arrow operator (->).
+
+v. The array subscript operator [], when overloaded, cannot ___________.
+Answer- Cannot take multiples values inside.
+
+b. Answer the following:
+i. What is the significance of operator overloading?
+Answer-
+Operator overloading is helpful in cases where the operators used for certain types provide semantics related to the domain context and syntactic support as found in the programming language. Operator Overloading is used for syntactical convenience, readability and maintainability.
+
+ii. List down the operators that cannot be overloaded as a friend.
+Answer-
+1)	= Assignment Operator
+2)	() Function Call
+3)	Subscripting Operator
+4)	-> Arrow operator
+
+iii. Write any one step for the process of overloading.
+Answer-
+•	Overloaded operator must have at least one operand that is user-defined type.
+•	Binary arithmetic operators such as +, -, *, and / must return a value.
+•	We cannot use friend function to overload certain operators. However, the member function can be used to overload those operators.
+•	We must remember that the precedence of operators cannot be changed by operator overloading. g. Multiplication operator has higher precedence than addition operator. We cannot change this meaning.
+•	Existing operators can only be overloaded, but the new operators cannot be overloaded.
+
+iv. What is type conversion?
+Answer-
+Type conversion is conversion from one data type to another. 
+
+v. State three different type conversion.
+Answer-
+Implicit Type Conversion
+This conversion is done by the compiler on its own, without any external trigger from the user.
+
+Explicit Type Conversion: Here user converts one data type to another explicitly.
+In C++, it can be done by two ways:
+Converting by assignment: This is done by explicitly defining the required type in front of the expression in parenthesis. 
+Conversion using Cast operator: A Cast operator is an unary operator which forces one data type to be converted into another data type.
+
+c. Algorithm Assignments:
+i. Assume a class named Bird exists. Write the member function definition that overloads the = operator for that class.
+Answer- 
+Bird &operator=(Bird b)
+{
+        name = b.name;
+ }
+
+ii. The class Stuff has both a copy constructor and an overloaded = operator.
+Assume that blob and clump are both instances of the Stuff class. For each statement below, indicate whether the copy constructor or the overloaded = operator will be called.
+a. Stuff blob = clump;
+Answer- Copy constructor will be called.
+
+b. clump = blob;
+Answer- Overloaded = operator will be called.
+
+c. blob.operator=(clump);
+Answer- Overloaded = operator will be called.
+
+d. showValues(blob); // blob is passed by value.
+Answer- Copy constructor will be called.
+
+d. Programming Assignments:
+i. Overload new & delete operators to manipulate objects of the Student class. The Student class must contain data members such as char *name, int roll_no, char *branch, etc. the overloaded new & delete operators must allocate memory for the student class object & its data members.
+Answer-
+#include<bits/stdc++.h>
+
+using namespace std;
+
+class Student
+{
+    string name;
+    int roll_no;
+    string branch;
+
+	public:
+
+    Student()
+    {
+        name = "";
+        roll_no = 0;
+        branch = "";
+    }
+
+    void *operator new(size_t size)
+    {
+        cout<<"\tOverloaded new Operator size is : "<<size;
+        void *p;
+        p = malloc(size);
+        return p;
+    }
+
+    void getData()
+    {
+        cout<<"\n\n\tEnter Name : ";
+        cin>>name;
+        cout<<"\tEnter Roll No. : ";
+        cin>>roll_no;
+        cout<<"\tEnter your Branch : ";
+        cin>>branch;
+    }
+
+    void display()
+    {
+        cout<<"\n\tName : "<<name<<endl;
+        cout<<"\tRoll No. : "<<roll_no<<endl;
+        cout<<"\tBranch : "<<branch<<endl;
+    }
+
+    void operator delete(void *p)
+    {
+        cout<<"\n\tOverloaded delete operator called"<<endl;
+        free(p);
+    }
+};
+
+int main()
+{
+    Student *t = new Student();
+    t->getData();
+    t->display();
+    delete t;
+    return 0;
+}
+ 
+
+ii. Write an interactive operator overloaded program for manipulating rational numbers. Overload operators such as +, -, *, /, >>, <<, >, <, ==.
+Answer-
+#include<iostream>
+
+using namespace std;
+
+class rationalNumber
+{
+	int num, den;
+
+	public:
+
+    rationalNumber()
+    {
+        num = 0.0f;
+        den = 1.0f;
+    }
+
+    rationalNumber(int num, int den)
+    {
+        this->num = num;
+        this->den = den;
+    }
+
+    void simplify()
+    {
+        int g = num > den ? num : den;
+        int gcd = 0;
+        for(int i = g; i > 1; i--)
+        {
+            if(num % i == 0 && den % i == 0)
+            {
+                gcd = i;
+                break;
+            }
+        }
+        if(gcd != 0)
+        {
+            num /= gcd;
+            den /= gcd;
+        }
+    }
+
+    rationalNumber &operator+(rationalNumber r)
+    {
+        rationalNumber temp;
+        temp.num = num*r.den + den*r.num;
+        temp.den = den*r.den;
+        temp.simplify();
+        return temp;
+    }
+
+    rationalNumber operator-(rationalNumber r)
+    {
+        rationalNumber temp;
+        temp.num = num*r.den - den*r.num;
+        temp.den = den*r.den;
+        temp.simplify();
+        return temp;
+    }
+
+    rationalNumber operator*(rationalNumber r)
+    {
+        rationalNumber temp;
+        temp.num = (num*r.num);
+        temp.den = (den*r.den);
+        temp.simplify();
+        return temp;
+    }
+
+    rationalNumber operator/(rationalNumber r)
+    {
+        rationalNumber temp;
+        temp.num = (num*r.den);
+        temp.den = (den*r.num);
+        temp.simplify();
+        return temp;
+    }
+
+    bool operator >(rationalNumber r)
+    {
+        float f1 = num/float(den);
+        float f2 = r.num/float(r.den);
+        if(f1 > f2)
+            return true;
+        else
+            return false;
+    }
+
+    bool operator <(rationalNumber r)
+    {
+        float f1 = num/float(den);
+        float f2 = r.num/float(r.den);
+        if(f1 < f2)
+            return true;
+        else
+            return false;
+    }
+
+    bool operator ==(rationalNumber r)
+    {
+        float f1 = num/float(den);
+        float f2 = r.num/float(r.den);
+        if(f1 == f2)
+            return true;
+        else
+            return false;
+    }
+
+    friend ostream &operator<<(ostream &out, rationalNumber &r)
+    {
+        out<<r.num<<"/"<<r.den;
+        return out;
+    }
+
+    friend istream &operator>>(istream &in, rationalNumber &r)
+    {
+        in>>r.num>>r.den;
+        return in;
+    }
+};
+
+int main()
+{
+	rationalNumber r1, r2, r3;
+
+	int choice;
+
+	char ch = 'Y';
+
+	do
+	{
+		cout<<"\n\t\t\tCHOICE MENU\n";
+		cout<<"\n\t1.Addition";
+		cout<<"\n\t2.Subtraction";
+		cout<<"\n\t3.Multiplication";
+		cout<<"\n\t4.Division";
+		cout<<"\n\t5.Greater than check";
+		cout<<"\n\t6.Less than check";
+		cout<<"\n\t7.Equality check";
+		cout<<"\n\n\tEnter your Choice: ";
+		cin>>choice;
+
+		cout<<"\n\tEnter Numerator and Denominator of First Rational number : ";
+		cin>>r1;
+		cout<<"\tEnter Numerator and Denominator of Second Rational number : ";
+		cin>>r2;
+
+		switch(choice)
+		{
+			case 1:	r3 = r1 + r2;
+					cout<<"\n\tAddition : "<<r3;
+					break;
+
+			case 2:	r3 = r1 - r2;
+					cout<<"\n\tSubtraction : "<<r3;
+					break;
+
+			case 3:	r3 = r1 * r2;
+					cout<<"\n\tMultiplication : "<<r3;
+					break;
+
+			case 4:	r3 = r1 / r2;
+					cout<<"\n\tDivision : "<<r3;
+					break;
+
+            case 5:	cout<<"\n\tGreater than check : ";
+                   		 if(r1 > r2)
+                        	cout<<r1<<" is greater than "<<r2;
+                    	else
+                        	cout<<r1<<" is smaller than "<<r2;
+			break;
+
+            case 6:	cout<<"\n\tLess than check : ";
+                   		 if(r1 < r2)
+                       	 cout<<r1<<" is smaller than "<<r2;
+                    	else
+                       	 cout<<r1<<" is greater than "<<r2;
+			break;
+
+            case 7:	cout<<"\n\tEquality check : ";
+                   		 if(r1 == r2)
+                      	 cout<<r1<<" is equal to "<<r2;
+                    	else
+                        	cout<<r1<<" is not equal to "<<r2;
+			break;
+
+	default:	cout<<"\n\tWrong choice!!!";
+		}
+		cout<<"\n\tDo you want to continue (Y/N) : ";
+		cin>>ch;
+	}while(ch == 'y' || ch == 'Y');
+	return 0;
+} 
+
+iii. Write an interactive operator overloaded program to manipulate the Quadratic Equation. Overload operators such as >>, <<, +, -. Also write functions for:
+a. To computes the value of a polynomial for a given value of x.
+b. To computes the two solutions of the equation ax2+bx+c=0.
+Answer-
+#include<iostream>
+#include<math.h>
+
+using namespace std;
+
+class Quadratic
+{
+	int a, b, c;
+
+	public:
+
+    Quadratic()
+    {
+        a = 0;
+        b = 0;
+        c = 0;
+    }
+
+    Quadratic(int a, int b, int c)
+    {
+        this->a = a;
+        this->b = b;
+        this->c = c;
+    }
+
+    Quadratic &operator+(Quadratic q)
+    {
+        Quadratic temp;
+        temp.a = a + q.a;
+        temp.b = b + q.b;
+        temp.c = c + q.c;
+        return temp;
+    }
+
+    Quadratic &operator-(Quadratic q)
+    {
+        Quadratic temp;
+        temp.a = a - q.a;
+        temp.b = b - q.b;
+        temp.c = c - q.c;
+        return temp;
+    }
+
+    float value(float x)
+    {
+        return (a*pow(x, 2) + b*x + c);
+    }
+
+    void solution(float &x1, float &x2)
+    {
+        x1 = (-b + sqrt(pow(b, 2)-(4*a*c))) / 2*a;
+        x2 = (-b - sqrt(pow(b, 2)-(4*a*c))) / 2*a;
+    }
+
+    friend ostream &operator<<(ostream &out, Quadratic &q)
+    {
+        out<<q.a<<"x^2 + "<<q.b<<"x + "<<q.c;
+        return out;
+    }
+
+    friend istream &operator>>(istream &in, Quadratic &q)
+    {
+        in>>q.a>>q.b>>q.c;
+        return in;
+    }
+};
+
+int main()
+{
+	Quadratic q1, q2, q3;
+
+	int choice;
+	float x, y;
+
+	char ch = 'Y';
+
+	do
+	{
+		cout<<"\n\t\t\tCHOICE MENU\n";
+		cout<<"\n\t1.Addition";
+		cout<<"\n\t2.Subtraction";
+		cout<<"\n\t3.Value at a point";
+		cout<<"\n\t4.Solution of Quadratic Equation";
+		cout<<"\n\n\tEnter your Choice: ";
+		cin>>choice;
+
+		switch(choice)
+		{
+			case 1:	cout<<"\n\tEnter Quadratic equation (ax^2+bx+c) terms";
+                    cout<<"\n\n\tEnter coefficients of 2nd degree, 1st degree and constant term of First Quadratic equation (a, b, c) : ";
+                    cin>>q1;
+                    cout<<"\tEnter coefficients of 2nd degree, 1st degree and constant term of Second Quadratic equation (a, b, c) : ";
+                    cin>>q2;
+                    q3 = q1 + q2;
+                    cout<<"\n\tFirst Quadratic equation : "<<q1;
+                    cout<<"\n\tSecond Quadratic equation : "<<q2;
+					cout<<"\n\tAddition : "<<q3;
+					break;
+
+			case 2:	cout<<"\n\tEnter Quadratic equation (ax^2+bx+c) terms";
+                    cout<<"\n\n\tEnter coefficients of 2nd degree, 1st degree and constant term of First Quadratic equation (a, b, c) : ";
+                    cin>>q1;
+                    cout<<"\tEnter coefficients of 2nd degree, 1st degree and constant term of Second Quadratic equation (a, b, c) : ";
+                    cin>>q2;
+                    q3 = q1 - q2;
+                    cout<<"\n\tFirst Quadratic equation : "<<q1;
+                    cout<<"\n\tSecond Quadratic equation : "<<q2;
+					cout<<"\n\tSubtraction : "<<q3;
+					break;
+
+			case 3: cout<<"\n\tEnter Quadratic equation (ax^2+bx+c) terms";
+                    cout<<"\n\n\tEnter coefficients of 2nd degree, 1st degree and constant term of Quadratic equation (a, b, c) : ";
+                    cin>>q1;
+                    cout<<"\tEnter value to evaluate quadratic equation at that point : ";
+                    cin>>x;
+                    cout<<"\n\tGiven Quadratic equation : "<<q1;
+                    cout<<"\n\tValue at "<<x<<" is : "<<q1.value(x);
+					break;
+
+			case 4: x = y = 0;
+                    cout<<"\n\tEnter Quadratic equation (ax^2+bx+c) terms";
+                    cout<<"\n\n\tEnter coefficients of 2nd degree, 1st degree and constant term of Quadratic equation (a, b, c) : ";
+                    cin>>q1;
+                    cout<<"\n\tGiven Quadratic equation : "<<q1;
+                    q1.solution(x, y);
+                    cout<<"\n\tSolution : ";
+                    cout<<"\n\tx1 = "<<x;
+                    cout<<"\n\tx2 = "<<y;
+					break;
+
+			default:cout<<"\n\tWrong choice!!!";
+		}
+		cout<<"\n\n\tDo you want to continue (Y/N) : ";
+		cin>>ch;
+	}while(ch == 'y' || ch == 'Y');
+	return 0;
+}
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+ 

@@ -1,0 +1,391 @@
+a. Fill in the Blanks
+
+i. How many operands does each of following types of operators requires?
+__ Unary, __ Binary, __ Ternary.
+
+ANSWER: Unary- one operand
+	Bianry- two operand
+	Ternary- three operand 
+
+ii. A program will “fall through” a case section if it is missing the ______
+statement.
+
+ANSWER:  A program will “fall through” a case section if it is missing the break statement.
+
+
+
+_______________________________________________________________________________________________________________________
+
+
+b. Answer the following:
+i. Is the following an example of integer division or floating-point division?
+What value will be stored in the portion? Portion=70/3;
+
+ANSWER: with no prior context it is the example of integer division
+	the value  of Portion is equal to 23
+
+______________________________________________________________________________________________________________________
+
+
+
+
+c. Write assignment statements that perform the following operations with the
+variables a , b , and c .
+
+i. Adds 2 to a and stores the result in b.
+
+ANSWER:	b= a+2;
+
+
+ii. Multiplies b times 4 and stores the result in a.
+
+ANSWER: a= b*4;
+
+iii. Divides a by 3.14 and stores the result in b.
+
+ANSWER: b= (a/3.14);
+
+iv. Subtracts 8 from b and stores the result in a.
+
+ANSWER: a= b-8;
+
+v. Stores the value 27 in a.
+
+ANSWER: a=27;
+
+vi. Stores the character ‘K’ in c.
+
+ANSWER: c='K';
+
+vii. Stores the ASCII code for ‘B’ in c.
+
+ANSWER: c= int('B');
+
+
+________________________________________________________________________________________________________________________________
+
+
+d. Programming Assignments:
+i. Write the above assignment with help of class, inline functions and switch
+statement.
+
+ANSWER: 
+
+
+
+#include<iostream>
+using namespace std;
+class calculator{
+int num1,num2;
+float result;
+public:
+void getData();
+void putData();
+void add();
+void sub();
+void mul();
+void div();
+void mod();
+};
+inline void calculator::getData(){
+cout<<"Enter two numbers";
+cin>>num1>>num2;
+}
+inline void calculator::putData(){
+cout<<"Num1 = "<<num1<<"\tNum2 = "<<num2<<"\tResult = "<<result;
+}
+inline void calculator::add(){
+result=num1+num2;
+}
+inline void calculator::sub(){
+result=num1-num2;
+}
+inline void calculator::mul(){
+result=num1*num2;
+}
+inline void calculator::mod(){
+result=num1%num2;
+}
+inline void calculator::div(){
+result=num1/float(num2);
+}
+int main(){
+calculator c;
+char choice, ans;
+do
+{
+cout<<"\n**********MENU*************\n";
+cout<<"1. +\n2. - \n3. * \n4. / \n5. %\n Enter your operator\n";
+cin>>choice;
+c.getData();
+
+switch(choice)
+{
+case '+': c.add();
+break;
+case '-': c.sub();
+break;
+case '*': c.mul();
+break;
+case '/': c.div();
+break;
+case '%': c.mod();
+break;
+}
+c.putData();
+cout<<"\nDo you want to continue(Y/N)";
+cin>>ans;
+}while(ans=='Y' || ans=='y');
+return 0;
+}
+
+
+
+
+
+
+
+______________________________________________________________________________________________________________________________________________
+
+
+
+
+
+
+
+
+
+
+
+ii. Write a program for Currency convertors using switch case statement.
+
+
+
+
+
+#include<iostream>
+using namespace std;
+int main(){
+    float usd, i_rup, b_pound;
+    int choice;
+    char ans;
+    do{
+        
+    statement1:
+    cout<< "*****************ENTER YOUR CHOICE************************\n";
+    cout<< "1 for USD to Indian rupees\n2 for Indian rupees to USD\n3 for USD to British Pound\n4 for British pound to USD\n5 for  Indian rupees to British Pound\n6 for British Pound to Indian rupees\n";
+    cin>> choice;
+    switch(choice){
+	case 1:{ 
+	    cout<< "Enter value in USD\n";
+	    cin>> usd;
+	    i_rup= 74.67 * usd;
+	    cout<<"Equivalent value of Indian rupees is "<< i_rup<<endl;
+	    break;
+    }
+    case 2: {
+	    cout<< "Enter value in Indian rupees\n";
+	    cin>> i_rup;
+	    usd=  i_rup/ 74.67;
+	    cout<<"Equivalent value of USD is "<< usd<<endl;
+	    break;
+    }
+    case 3: {
+	    cout<< "Enter value in USD\n";
+	    cin>> usd;
+	    b_pound= 0.79*usd;
+	    cout<<"Equivalent value of British pound is "<< b_pound<<endl;
+	    break;
+    }
+    case 4: {
+	    cout<< "Enter value in British pound\n";
+	    cin>> b_pound;
+	    usd=  b_pound/0.79;
+	    cout<<"Equivalent value of USD is "<< usd<<endl;
+	    break;
+    }
+    case 5: {
+	    cout<< "Enter the value in Indian rupees \n";
+	    cin>> i_rup;
+	    b_pound=i_rup/95.07;
+	    cout<<"Equivalent value of  British pound is "<< b_pound<<endl;
+	    break;
+    }
+    case 6: {
+	    cout<<  "Enter value in b_pound \n";
+	    i_rup=  b_pound*95.07;
+	    cout<<"Equivalent value of Indian rupees is "<< i_rup<<endl;
+	    break;
+    }
+    default: {
+	    cout<< " Wrong choice \n";
+	    goto statement1;
+    }
+    }
+    cout<< "Do you want to continue (Y/N)";
+    cin>> ans;
+    }while(ans=='y'|| ans=='Y');
+}
+
+
+
+______________________________________________________________________________________________________________________________________________
+
+
+
+
+iii. Write a menu driven program for unit conversion (at least 3).
+
+
+
+
+#include<iostream>
+using namespace std;
+int main(){
+    float meter, Centimeter, KiloGram, Gram, Litres, meter_cube;
+    int choice;
+    char ans;
+    do{
+        
+    statement1:
+    cout<< "*****************ENTER YOUR CHOICE************************\n";
+    cout<< "1 for Meter to Centimeter\n2 for Centimeter to meter\n3 for Gram to KiloGram\n4 for KiloGram to Gram\n5 for  Litres to meter cube\n6 for meter cube to Litres\n";
+    cin>> choice;
+    switch(choice){
+	case 1:{ 
+	    cout<< "Enter value in Meter(s)\n";
+	    cin>> meter;
+	    Centimeter= 100 * meter;
+	    cout<<"Equivalent value of Centimeter is "<< Centimeter<<endl;
+	    break;
+    }
+    case 2: {
+	    cout<< "Enter value in Centimeter(s)\n";
+	    cin>> Centimeter;
+	    meter= Centimeter/100;
+	    cout<<"Equivalent value of Meter is "<< meter<<endl;
+	    break;
+    }
+    case 3: {
+	    cout<< "Enter value in Gram(s)\n";
+	    cin>> Gram;
+	    KiloGram= Gram/1000;
+	    cout<<"Equivalent value of KiloGram is "<< KiloGram<<endl;
+	    break;
+    }
+    case 4: {
+	    cout<< "Enter value in KiloGram(s)\n";
+	    cin>> KiloGram;
+	    Gram= KiloGram*1000;
+	    cout<<"Equivalent value of Gram is "<< Gram<<endl;
+	    break;
+    }
+    case 5: {
+	    cout<< "Enter value in Litres(s)\n";
+	    cin>> Litres;
+	    meter_cube= Litres/1000;
+	    cout<<"Equivalent value of meter_cube is "<< meter_cube<<endl;
+	    break;
+    }
+    case 6: {
+	    cout<<  "Enter value in meter cube \n";
+	    Litres=  meter_cube*1000;
+	    cout<<"Equivalent value of Litres is "<< Litres<<endl;
+	    break;
+    }
+    default: {
+	    cout<< " Wrong choice \n";
+	    goto statement1;
+    }
+    }
+    cout<< "Do you want to continue (Y/N)";
+    cin>> ans;
+    }while(ans=='y'|| ans=='Y');
+}
+
+
+
+
+
+
+______________________________________________________________________________________________________________________________________________
+
+
+
+
+
+
+e. Rewrite the following program. Use a switch statement instead of the if/else if
+statement.
+#include <iostream>
+using namespace std;
+int main()
+{
+int selection;
+cout << "Which formula do you want to see?\n\n";
+cout << "1. Area of a circle\n";
+cout << "2. Area of a rectangle\n";
+cout << "3. Area of a cylinder\n"
+cout << "4. None of them!\n";
+cin >> selection;
+if (selection == 1)
+cout << "Pi times radius squared\n";
+else if (selection == 2)
+cout << "Length times width\n";
+else if (selection == 3)
+cout << "Pi times radius squared times height\n";
+else if (selection == 4)
+cout << "Well okay then, good bye!\n";
+else
+cout << "Not good with numbers, eh?\n";
+return 0;
+}
+
+
+
+ANSWER:
+
+
+
+#include <iostream>
+using namespace std;
+int main()
+{
+int selection;
+
+cout << "Which formula do you want to see?\n\n";
+cout << "1. Area of a circle\n";
+cout << "2. Area of a rectangle\n";
+cout << "3. Area of a cylinder\n";
+cout << "4. None of them!\n";
+cin >> selection;
+switch(selection){
+    case 1: cout << "Pi times radius squared\n";
+    break;
+    case 2: cout << "Length times width\n";
+    break;
+    case 3: cout << "Pi times radius squared times height\n";
+    break;
+    case 4: cout << "Well okay then, good bye!\n";
+    break;
+    default: cout << "Not good with numbers, eh?\n";
+    return 0;    
+    }
+}
+
+
+
+
+
+______________________________________________________________________________________________________________________________________________
+
+
+
+
+
+
+
+
+
+
+

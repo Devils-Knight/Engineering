@@ -1,0 +1,299 @@
+Experiment 8
+
+Question And Answers 
+
+Conclusion : 
+
+From above experiment I have concluded that : there is wide area of implementation for structure that meets the eyes in daily lives like banking. I also concluded that main differnece between Union and structure is that in union you can access one value (declare one value) at one time whil there is no limitaton on structure. However union uses memory of the largest data type present while structure uses all the memory avaible.
+
+14.Review Questions & Exercises: 
+
+a. Fill in the Blanks 
+
+i. Before a structure variable can be created, the structure must be _________.
+Answer- structure must be defined.
+
+ii. In the definition of a structure variable, the ___________ is placed before the variable name, just like the data type of a regular variable is placed before its name. 
+Answer- the structure name is placed.
+
+iii. The variables declared inside a structure declaration are called ___________.
+Answer- members of the structure.
+
+b. Answer the following: 
+
+i. Look at the following code. 
+struct Town 
+{ 
+string townName; 
+string countyName; 
+double population; 
+double elevation; 
+}; 
+
+Town t = { "Canton", "Haywood", 9478 }; 
+
+A) What value is stored in t.townName ? 
+Answer- Canton
+
+B) What value is stored in t.countyName ? 
+Answer- Haywood
+
+C) What value is stored in t.population ? 
+Answer- 9478
+
+D) What value is stored in t.elevation ?
+Answer- 0
+
+ii. Look at the following declaration. 
+enum Person 
+{ BILL, JOHN, CLAIRE, BOB }; 
+Person p; 
+Indicate whether each of the following statements or expressions is valid or invalid. 
+A) p = BOB; 
+Answer- Valid.
+B) p++ ; 
+Answer- Invalid.
+C) BILL > BOB 
+Answer- Valid.
+D) p = 0; 
+Answer- Invalid.
+E) int x = BILL; 
+Answer- Valid.
+F) p = static_cast<Person>(3); 
+Answer- Valid.
+G) cout << CLAIRE << endl;
+Answer- Valid.
+
+c. Algorithm Workbench 
+The structure Car is declared as follows: 
+struct Car 
+{ 
+string carMake; 
+string carModel; 
+int yearModel; 
+double cost; 
+}; 
+
+i. Write a definition statement that defines a Car structure variable initialized with the following data: 
+Make: Ford 
+Model: Mustang 
+Year Model: 1968 
+Cost: $20,000.
+Answer- 
+Car c = {"Ford","Mustang",1968,20000};
+
+ii. Define an array of 35 of the Car structure variables. Initialize the first three elements with the following data: 
+Make		Model		Year	Cost
+Ford		Taurus		1997	11,00,000
+Honda  		Accord  	1992    5,00,000
+Lamborghini	Countach    	1997	20,00,000
+
+Answer- 
+Car c[35] = {{"Ford","Taurus",1997,1100000}, {"Honda","Accord",1992,500000}, {"Lamborghini","Countach",1997,2000000}};
+
+iii. Write a loop that will step through the array you defined in Question ii, displaying the contents of each element.
+Answer- 
+for(int i = 0; i < 3; i++)
+    {
+        cout<<"Car Make : "<<c[i].carMake<<endl;
+        cout<<"Car Model : "<<c[i].carModel<<endl;
+        cout<<"Year : "<<c[i].yearModel<<endl;
+        cout<<"Cost : "<<c[i].cost<<endl;
+    }
+
+d. Programming Assignments: 
+i. Write a program in C++ using structure for maintaining extra-curricular activities of students (roll, name, year, activity name, and prize). The prize can be either cash prize or memento but not both. Cash prize is to be recorded as integer and memento is to be recorded as character string. Use union within structure for prize. Read extra-curricular activity record for n students and Display extra-curricular activities.
+Answer-
+
+#include <iostream>
+#include <cstdio>
+using namespace std;
+struct ECactivities
+{
+    int roll, year;
+    char name[30], a_name[50];
+    union prize
+    {
+        int cash;
+        char memento[50];
+    }p;
+};
+int main()
+{
+    int n;
+    cout<<"Number of Students : ";
+    cin>>n;
+    ECactivities e[n];
+    int choice = 0;
+    for(int i=0;i<n;i++)
+    {
+        cout<<"\nEnter Student "<<i+1<<" details : ";
+        cout<<"\n\nEnter Roll No:";
+        cin>>e[i].roll;
+        cout<<"Enter your Name:";
+        fflush(stdin);
+        cin.getline(e[i].name, 30);
+        cout<<"Enter Activity Name:";
+        fflush(stdin);
+        cin.getline(e[i].a_name, 50);
+        cout<<"Enter Year:";
+        cin>>e[i].year;
+        cout<<"\nEnter 1 for cash award";
+        cout<<"\nEnter 2 for memento"<<endl;
+        cin>>choice;
+        if(choice == 1)
+        {
+            cout<<"Enter Cash prize received:";
+            cin>>e[i].p.cash;
+        }
+        else if(choice == 2)
+        {
+            cout<<"What did you receive as memento:";
+            fflush(stdin);
+            cin.getline(e[i].p.memento, 50);
+        }
+
+        cout<<"\nStudent "<<i+1<<" record";
+        cout<<"\n\nName:"<<e[i].name<<endl;
+        cout<<"Roll No:"<<e[i].roll<<endl;
+        cout<<"Activity Name:"<<e[i].a_name<<endl;
+        cout<<"Year:"<<e[i].year<<endl;
+        if(choice == 1)
+        {
+            cout<<"Cash Prize:"<<e[i].p.cash<<endl;
+        }
+        else if(choice == 2)
+        {
+            cout<<"Memento : "<<e[i].p.memento<<endl;
+        }
+    }
+    return 0;
+}
+
+ii. Write a program in C++ to define a structure that holds Information of items like Item Number, Item Names, Item Category (Electronics, Food, Cosmetics etc), price, manufacturing date & Available stock/qty. Display the available items.
+Answer-
+
+#include <iostream>
+#include <cstdio>
+using namespace std;
+struct item
+{
+    int i_no;
+    char i_name[20];
+    char i_category[20];
+    float price;
+    char date[11];
+    int qty;
+};
+int main(){
+    int n;
+    cout<<"Enter number of items:";
+    cin>>n;
+    item a[n];
+    for(int i=0;i<n;i++){
+        cout<<"Enter item Number:";
+        cin>>a[i].i_no;
+        cout<<"Enter item Name:";
+        fflush(stdin);
+        cin.getline(a[i].i_name, 20);
+        cout<<"Enter item Category:";
+        fflush(stdin);
+        cin.getline(a[i].i_category, 20);
+        cout<<"Enter Price:";
+        cin>>a[i].price;
+        cout<<"Enter manufacturing date:";
+        fflush(stdin);
+        cin.getline(a[i].date, 11);
+        cout<<"Enter Available Quantity:";
+        cin>>a[i].qty;
+    }
+    cout<<"\nAvailable Items";
+    for(int i=0;i<n;i++){
+        if(a[i].qty > 0){
+            cout<<"\nItem "<<i+1;
+            cout<<"\n\nItem Number:"<<a[i].i_no;
+            cout<<"\nItem Name:"<<a[i].i_name;
+            cout<<"\nItem Category:"<<a[i].i_category;
+            cout<<"\nPrice:"<<a[i].price;
+            cout<<"\nManufacturing Date:"<<a[i].date;
+            cout<<"\nAvailable Quantity:"<<a[i].qty;
+        }
+    }
+    return 0;
+}
+
+iii. Drink Machine Simulator Write a program that simulates a soft drink machine. The program should use a structure that stores the following data: 
+Drink Name, Drink Cost, Number of Drinks in Machine The program should create an array of five structures. The elements should be initialized with the following data:  
+Drink Name    	Cost	Number in Machine
+Cola		25	20
+Root Beer      	25	20
+Lemon-Lime    	25	20
+Grape Soda    	50	20
+Cream Soda    	50	20
+
+Each time the program runs, it should enter a loop that performs the following steps: 
+a. A list of drinks is displayed on the screen.  
+b. The user should be allowed to either quit the program or pick a drink.  
+c. If the user selects a drink, he or she will next enter the amount of money that is to be inserted into the drink machine. The program should display the amount of change that would be returned and subtract one from the number of that drink left in the machine.  
+d. If the user selects a drink that has sold out, a message should be displayed.  
+e. The loop then repeats.  
+f. When the user chooses to quit the program, it should display the total amount of money the machine earned. 
+Input Validation: When the user enters an amount of money, do not accept negative values or values greater than 150.
+Answer-
+
+#include <iostream>
+#include <cstdio>
+using namespace std;
+struct drink
+{
+    char d_name[20];
+    float d_cost;
+    int d_availability;
+};
+int main()
+{
+    drink d[5] = {{"Cola",25,20},{"Root Beer",25,20},{"Lemon-Lime",25,20},{"Grape Soda",50,20},{"Cream Soda",50,20}};
+    char ch = 'y';
+    cout<<"Do you want to pick a drink (Y/N):";
+    cin>>ch;
+    int choice;
+    int moneyEarned = 0;
+    while(ch=='y'||ch=='Y')
+    {
+        cout<<"\nDrink List"<<endl;
+        for(int i=0;i<5;i++)
+        {
+            cout<<"\nDrink "<<i+1<<endl;
+            cout<<"Drink Name:"<<d[i].d_name;
+            cout<<"\nCost:"<<d[i].d_cost;
+            cout<<"\nNumber in Machine:"<<d[i].d_availability<<endl;
+        }
+        int money, change;
+        cout<<"\nWhat do you want to drink(1-5):";
+        cin>>choice;
+        if(d[choice-1].d_availability == 0)
+        {
+            cout<<"Chosen drink not available";
+        }
+        else
+        {
+            cout<<"Insert money:";
+            cin>>money;
+            while(money<0||money>150)
+            {
+                cout<<"Insert amount less than or equal to 150:";
+                cin>>money;
+            }
+            change = money - d[choice-1].d_cost;
+            moneyEarned += d[choice-1].d_cost;
+            d[choice-1].d_availability -= 1;
+            cout<<"Change:"<<change<<endl;
+        }
+        cout<<"\nDo you want to pick a drink (Y/N) : ";
+        cin>>ch;
+    }
+    cout<<"Money Earned : "<<moneyEarned;
+    return 0;
+}
+
+
